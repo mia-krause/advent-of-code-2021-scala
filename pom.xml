@@ -9,9 +9,9 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <jdk.version>1.8</jdk.version>
-        <scala.compat.version>2.12</scala.compat.version>
-        <scala.version>2.12.10</scala.version>
+        <jdk.version>17</jdk.version>
+        <scala.compat.version>3.1.0</scala.compat.version>
+        <scala.version>3.1.0</scala.version>
     </properties>
 
     <build>
@@ -97,30 +97,17 @@
 
     <dependencies>
         <!-- Scala dependencies -->
+        <!-- https://mvnrepository.com/artifact/org.scala-lang/scala3-library -->
         <dependency>
             <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${scala.version}</version>
+            <artifactId>scala3-library_3</artifactId>
+            <version>3.1.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/net.liftweb/lift-json -->
         <dependency>
             <groupId>net.liftweb</groupId>
             <artifactId>lift-json_2.12</artifactId>
             <version>3.4.3</version>
-        </dependency>
-
-        <!-- Test dependencies -->
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_${scala.compat.version}</artifactId>
-            <version>3.0.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.scalamock</groupId>
-            <artifactId>scalamock_${scala.compat.version}</artifactId>
-            <version>4.0.0</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
