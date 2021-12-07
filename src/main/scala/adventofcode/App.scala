@@ -2,26 +2,41 @@ package adventofcode
 
 import scala.io.Source
 import scala.runtime.ScalaRunTime
+import scala.util.control.Breaks.break
 
 object App {
   def main(args: Array[String]): Unit = {
-    println("Hello World")
     val listOfArrays = readFile().toStream.map(s => s.split("").map(_.toInt)).toList
-    val sum = Array.fill[Int](12)(0)
-    listOfArrays.foreach(arr => for i <- 0 to 11 do sum(i) = sum(i)+arr(i))
-    val bits = sum.map(i => if(i < listOfArrays.length/2) 0 else 1)
-    val bitsInverse = sum.map(i => if(i < listOfArrays.length/2) 1 else 0)
-    val gamma = Integer.parseInt(bits.mkString, 2)
-    val epsilon = Integer.parseInt(bitsInverse.mkString, 2)
-    println(sum.mkString("Array(", ", ", ")"))
-    println(bits.mkString("Array(", ", ", ")"))
-    println(bitsInverse.mkString("Array(", ", ", ")"))
-    println(gamma)
-    println(epsilon)
-    println(epsilon*gamma)
+    var reducedGammaList = listOfArrays
+    var bits: Array[Int] = getMostCommonBits(reducedGammaList)
+    for(i <- listOfArrays.head.indices) {
+      if(reducedGammaList.length>1) {
+        reducedGammaList = reducedGammaList.filter(_(i) == bits(i))
+        bits = getMostCommonBits(reducedGammaList)
+      }
+    }
+    val gamma = Integer.parseInt(reducedGammaList.head.mkString, 2)
+
+    var reducedEpsilonList = listOfArrays
+    bits = getMostCommonBits(reducedEpsilonList)
+    for(i <- listOfArrays.head.indices) {
+      if(reducedEpsilonList.length>1) {
+        reducedEpsilonList = reducedEpsilonList.filter(_ (i) != bits(i))
+        bits = getMostCommonBits(reducedEpsilonList)
+      }
+    }
+    val epsilon = Integer.parseInt(reducedEpsilonList.head.mkString, 2)
+
+    println(gamma*epsilon)
   }
 
 
+  private def getMostCommonBits(list: List[Array[Int]]) = {
+    var sum = Array.fill[Int](list.head.length)(0)
+    list.foreach(arr => for i <- list.head.indices do sum(i) = sum(i) + arr(i))
+    val half: Double =  list.length/ 2.0
+    sum.map(j => if (j >= half) 1 else 0)
+  }
 
   def readFile(): List[String] = {
     val source = Source.fromFile("src/main/resources/input_day3")
