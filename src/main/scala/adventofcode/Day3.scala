@@ -4,7 +4,7 @@ import scala.io.Source
 import scala.runtime.ScalaRunTime
 import scala.util.control.Breaks.break
 
-object App {
+object Day3 {
   def main(args: Array[String]): Unit = {
     val listOfArrays = readFile().toStream.map(s => s.split("").map(_.toInt)).toList
     var reducedGammaList = listOfArrays
