@@ -18,4 +18,12 @@ object Skeleton {
     source.close()
     list
   }
+
+  def printTwoDimesionalArrToString[T](twoDimesionalArr: Array[Array[T]]) : Unit = {
+    twoDimesionalArr.foreach(printOneDimesionalArrToString(_))
+  }
+
+  def printOneDimesionalArrToString[T](oneDimesionalArr: Array[T]) : Unit = {
+    println(oneDimesionalArr.mkString(" "))
+  }
 }
